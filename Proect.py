@@ -1,4 +1,5 @@
 import math
+import random
 def method_rectangles():
     return 0
 def sin(x):
@@ -37,6 +38,8 @@ def ctg(x):
     -------
     '''
     return math.ctg(x)
+def x(x):
+    return x
 def method_trapecia():
     return 0
 def method_Sipmson(f,a,b):
@@ -54,6 +57,27 @@ def method_Sipmson(f,a,b):
     return ans1
 def method_Ghaus():
     return  0
-def method_Monte_Karlo():
-    return 0
-print(method_Sipmson(cos,-9,5))
+def method_Monte_Karlo(f, a, b):
+    s = []
+    x = 0
+    y = 0
+    n1 = 0
+    m1 = 0
+    n2 = 0
+    m2 = 0
+    for i in range(a, b):
+        s += [f(i)]
+    for i in range(((b - a) * math.ceil(max(s)))**2):
+        x = random.uniform(a, b)
+        y = random.uniform(0, math.ceil(max(s)))
+        m1 += 1
+        if f(x) >= y:
+            n1 += 1
+    for i in range(((b - a) * abs(math.floor(min(s))))**2):
+        x = random.uniform(a, b)
+        y = random.uniform(math.floor(min(s)), 0)
+        m2 += 1
+        if f(x) <= y:
+            n2 += 1
+
+    return -(((n1 / m1) * (b - a) * math.ceil(max(s))) + ((n2 / m2) * (b - a) * math.floor(min(s))))
