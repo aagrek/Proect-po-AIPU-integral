@@ -55,8 +55,16 @@ def method_Sipmson(f,a,b):
     return ans2*(b-a)/6/110000,ans1
         
     return ans1
-def method_Ghaus():
-    return  0
+def method_Ghaus(f, a, b):
+    Ai = [0.11846344, 0.23931433, 0.28444444, 0.23931433, 0.11846344]
+    mxi = [0.04691008, 0.23076534, 0.5, 0.76923466, 0.95308992]
+    bxi = []
+    integ = 0
+    for i in range(len(mxi)):
+        bxi.append(a + (b - a) * mxi[i])
+    for i in range(len(mxi)):
+        integ += Ai[i] * f(bxi[i])
+    return  (b - a) * integ
 def method_Monte_Karlo(f, a, b):
     s = []
     x = 0
