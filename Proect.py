@@ -81,16 +81,16 @@ def method_Monte_Karlo(f, a, b):
     m1 = 0
     n2 = 0
     m2 = 0
-    for i in range(a, b):
+    for i in range(math.floor(a), math.ceil(b)):
         s += [f(i)]
-    for i in range(((b - a) * math.ceil(max(s)))**3):
-        x = random.uniform(a, b)
+    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s)))**3):
+        x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(0, math.ceil(max(s)))
         m1 += 1
         if f(x) >= y:
             n1 += 1
-    for i in range(((b - a) * abs(math.floor(min(s))))**3):
-        x = random.uniform(a, b)
+    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s))))**3):
+        x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(math.floor(min(s)), 0)
         m2 += 1
         if f(x) <= y:
@@ -114,15 +114,13 @@ def grafik_Monte_Karlo(f):
     for i in range(0, 100):
         y1.append(method_Monte_Karlo(f, 0, t[i]) - integ(f, 0, t[i]))
     plt.title('График погрешностей')
-    plt.axis([0, 110, -2, 2])
     plt.plot(t, y1, 'r')
     plt.show()
 def grafik_Ghaus(f):
     t = []
     y1 = []
-    for i in range(1, 101):
-        t.append(i)
-    for i in range(0, 100):
+    t = np.arange(1, 101, 0.1)
+    for i in range(0, 1000):
         y1.append(method_Ghaus(f, 0, t[i]) - integ(f, 0, t[i]))
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
