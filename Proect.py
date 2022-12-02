@@ -7,7 +7,6 @@ def sin(x):
     '''
     ----------
     x : float (Угол в радианах)
-
     Returns : float (Синус угла в радианах)
     -------
     '''
@@ -52,15 +51,15 @@ def method_rectangles():
     return 0
 def method_trapecia():
     return 0
-def method_Sipmson(f, a, b):
+def method_Simson(f, a, b):
     ans1=(b-a)/6*(f(a)+4*f((a+b)/2)+f(b))
-    ans2=0
-    for i in range(100000):
+    ans2=f(a)+f(b)
+    for i in range(1,100000):
         if i%2==1:
-            ans2+=4*f(a+(b-a)*i/2/100000)
+            ans2+=4*f(a+(b-a)*i/100000)
         else:
-            ans2+=2*f(a+(b-a)*i/2/100000)
-    return ans2*(b-a)/6/100000,ans1
+            ans2+=2*f(a+(b-a)*i/100000)
+    return ans2*(b-a)/3/100000,ans1
         
     return ans1
 def method_Ghaus(f, a, b):
@@ -125,3 +124,5 @@ def grafik_Ghaus(f):
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
     plt.show()
+print(method_Ghaus(cos,3,8))
+print(method_Simson(cos,3,8))
