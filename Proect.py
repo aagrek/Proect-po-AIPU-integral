@@ -47,21 +47,28 @@ def step3(x):
 def integ(f, a, b):
     v, err = integrate.quad(f, a, b)
     return v
-def method_rectangles():
-    return 0
-def method_trapecia():
-    return 0
+def method_rectangles(f, a, b):
+    ans=0
+    n=10000
+    shag=(b-a)/n
+    for i in range (1,n+1):
+        ans=ans + f(a+shag*(i-1) + (b-a)/2/n)
+    return ans * shag
+def method_trapecia(f, a, b):
+    ans=(f(a)+f(b))/2
+    n=10000
+    shag=(b-a)/n
+    for i in range(1,n):
+        ans+=f(a+shag*i)
+    return ans * shag
 def method_Simson(f, a, b):
-    ans1=(b-a)/6*(f(a)+4*f((a+b)/2)+f(b))
     ans2=f(a)+f(b)
-    for i in range(1,100000):
+    for i in range(1,10000):
         if i%2==1:
-            ans2+=4*f(a+(b-a)*i/100000)
+            ans2+=4*f(a+(b-a)*i/10000)
         else:
-            ans2+=2*f(a+(b-a)*i/100000)
-    return ans2*(b-a)/3/100000,ans1
-        
-    return ans1
+            ans2+=2*f(a+(b-a)*i/10000)
+    return ans2*(b-a)/3/10000
 def method_Ghaus(f, a, b):
     Ai = [0.11846344, 0.23931433, 0.28444444, 0.23931433, 0.11846344]
     mxi = [0.04691008, 0.23076534, 0.5, 0.76923466, 0.95308992]
@@ -124,5 +131,10 @@ def grafik_Ghaus(f):
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
     plt.show()
-print(method_Ghaus(cos,3,8))
-print(method_Simson(cos,3,8))
+function=sin
+a=-1004
+b=312
+print(method_Ghaus(function,a,b))
+print(method_Simson(function,a,b))
+print(method_rectangles(function,a,b))
+print(method_trapecia(function,a,b))
