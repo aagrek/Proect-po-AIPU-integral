@@ -131,9 +131,46 @@ def grafik_Ghaus(f):
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
     plt.show()
+def grafik_triangles(f):
+    t = []
+    y1 = []
+    t = np.arange(1, 101, 0.1)
+    for i in range(0, 1000):
+        y1.append(method_triangles(f, 0, t[i]) - integ(f, 0, t[i]))
+    plt.title('График погрешностей')
+    plt.plot(t, y1, 'r')
+    plt.show()
+def grafik_trapecia(f):
+    t = []
+    y1 = []
+    t = np.arange(1, 101, 0.1)
+    for i in range(0, 1000):
+        y1.append(method_trapecia(f, 0, t[i]) - integ(f, 0, t[i]))
+    plt.title('График погрешностей')
+    plt.plot(t, y1, 'r')
+    plt.show()
+def grafik_Simson(f):
+    t = []
+    y1 = []
+    t = np.arange(1, 101, 0.1)
+    for i in range(0, 1000):
+        y1.append(method_simson(f, 0, t[i]) - integ(f, 0, t[i]))
+    plt.title('График погрешностей')
+    plt.plot(t, y1, 'r')
+    plt.show()
+def clever_grafik(f,method):
+    t = []
+    y1 = []
+    t = np.arange(1, 101, 0.1)
+    for i in range(0, 1000):
+        y1.append(method(f, 0, t[i]) - integ(f, 0, t[i]))
+    plt.title('График погрешностей')
+    plt.plot(t, y1, 'r')
+    plt.show()
 function=sin
-a=-1004
+a=-10
 b=312
+print(clever_grafik(sin,method_rectangles))
 print(method_Ghaus(function,a,b))
 print(method_Simson(function,a,b))
 print(method_rectangles(function,a,b))
