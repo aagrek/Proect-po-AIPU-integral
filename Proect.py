@@ -1,15 +1,12 @@
 import math
 import random
+import re
 from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
 def sin(x):
-    '''
-    ----------
-    x : float (Угол в радианах)
-    Returns : float (Синус угла в радианах)
-    -------
-    '''
+    if type(x) == type(sin):
+        return math.sin(x)
     return math.sin(x)
 def cos(x):
     '''
@@ -28,7 +25,7 @@ def tg(x):
     Return : float (Тангенс угла в радианах)
     -------
     '''
-    return math.tg(x)
+    return math.tan(x)
 def ctg(x):
     '''
     ----------
@@ -39,11 +36,10 @@ def ctg(x):
     '''
     return math.ctg(x)
 def x(x):
-    return x
-def step2(x):
-    return x ** 2
-def step3(x):
-    return x ** 3
+    return
+
+def step(x,a):
+    return x ** a
 def integ(f, a, b):
     v, err = integrate.quad(f, a, b)
     return v
@@ -112,52 +108,6 @@ def method_Monte_Karlo(f, a, b):
             else:
                 itog = 0
     return itog
-def grafik_Monte_Karlo(f):
-    t = []
-    y1 = []
-    for i in range(1, 101):
-        t.append(i)
-    for i in range(0, 100):
-        y1.append(method_Monte_Karlo(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей')
-    plt.plot(t, y1, 'r')
-    plt.show()
-def grafik_Ghaus(f):
-    t = []
-    y1 = []
-    t = np.arange(1, 101, 0.1)
-    for i in range(0, 1000):
-        y1.append(method_Ghaus(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей')
-    plt.plot(t, y1, 'r')
-    plt.show()
-def grafik_triangles(f):
-    t = []
-    y1 = []
-    t = np.arange(1, 101, 0.1)
-    for i in range(0, 1000):
-        y1.append(method_triangles(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей')
-    plt.plot(t, y1, 'r')
-    plt.show()
-def grafik_trapecia(f):
-    t = []
-    y1 = []
-    t = np.arange(1, 101, 0.1)
-    for i in range(0, 1000):
-        y1.append(method_trapecia(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей')
-    plt.plot(t, y1, 'r')
-    plt.show()
-def grafik_Simson(f):
-    t = []
-    y1 = []
-    t = np.arange(1, 101, 0.1)
-    for i in range(0, 1000):
-        y1.append(method_simson(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей')
-    plt.plot(t, y1, 'r')
-    plt.show()
 def clever_grafik(f,method):
     t = []
     y1 = []
@@ -167,11 +117,21 @@ def clever_grafik(f,method):
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
     plt.show()
-function=sin
+st=('sin+cos-tg').split('+')
+f=method_rectangles
 a=-10
 b=312
-print(clever_grafik(sin,method_rectangles))
-print(method_Ghaus(function,a,b))
-print(method_Simson(function,a,b))
-print(method_rectangles(function,a,b))
-print(method_trapecia(function,a,b))
+ans=0
+for i in st:
+    k=i.split('-')
+    print(k)
+    if len(k)==1:
+        ans=ans + f(eval(i), a, b)
+    else:
+        for j in range(len(k)):
+            if j == 0:
+                ans= ans+ f(eval(k[j]),a,b)
+            else:
+                ans= ans - f(eval(k[j]),a,b)
+print(ans)
+print(f(sin,a,b)+f(cos,a,b)-f(tg,a,b))
