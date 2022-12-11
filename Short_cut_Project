@@ -85,15 +85,11 @@ def clever_grafik(f,method):
     y1 = []
     t = np.arange(1, 101, 0.1)
     for i in range(0, 1000):
-        y1.append(method(f, 0, t[i]) - integ(f, 0, t[i]))
+        y1.append(abs(method(f, 0, t[i]) - integ(f, 0, t[i])))
     plt.title('График погрешностей')
     plt.plot(t, y1, 'r')
     plt.show()
 function=sin
 a=-10
 b=312
-print(clever_grafik(sin,method_rectangles))
-print(method_Ghaus(function,a,b))
-print(method_Simson(function,a,b))
-print(method_rectangles(function,a,b))
-print(method_trapecia(function,a,b))
+print(clever_grafik(step3,method_rectangles))
