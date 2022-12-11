@@ -113,6 +113,7 @@ def method_Monte_Karlo(f, a, b):
             else:
                 itog = 0
     return itog
+
 def clever_grafik(f,method):
     t = []
     y1 = []
@@ -123,11 +124,13 @@ def clever_grafik(f,method):
     plt.title('График погрешностей' )
     plt.plot(t, y1, 'r')
     plt.show()
-st=('step5-exp0.5').split('+')
-f=method_rectangles
+    
+stroka='sin-step5+exp0.5'
+fun=method_rectangles
 a=-10
 b=3
-def podshet(st,a,b):
+def podshet(st,a,b,f):
+    st=st.split('+')
     ans=0
     for i in st:
         k=i.split('-')
@@ -154,6 +157,5 @@ def podshet(st,a,b):
                     else:
                         ans-= f(eval(k[j]),a,b)
     return ans
-print(podshet(st,a,b))
-
-print(f(sin,a,b)+f(cos,a,b)-f(tan,a,b))
+print(podshet(stroka,a,b,fun))
+print(clever_grafik(stroka, fun))
