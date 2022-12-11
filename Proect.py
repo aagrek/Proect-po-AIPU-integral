@@ -108,6 +108,13 @@ def method_Monte_Karlo(f, a, b):
             else:
                 itog = 0
     return itog
+def method_Chebusheva(f, a, b):
+    itog = 0
+    t = [-0.911579, -0.601029, -0.528761, -0.167905, 0, 0.167905, 0.528761, 0.601029, 0.911579]
+    for i in range(len(t)):
+        sum += f((t[i]*(b * b - a * a)/4)
+    itog = sum * (b - a)/ len(t)
+    return itog
 def clever_grafik(f,method):
     t = []
     y1 = []
