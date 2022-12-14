@@ -95,11 +95,11 @@ def method_Ghaus(f, a, b, *arg):
     for i in range(len(mxi)):
         bxi.append(a + (b - a) * mxi[i])
     for i in range(len(mxi)):
-        if str(f) == 'step':
+        if str(f)[10:14] == 'step':
             integ += Ai[i] * f(bxi[i], arg[0])
-        elif str(f) == 'loga':
+        elif str(f)[10:14] == 'loga':
             integ += Ai[i] * f(bxi[i], arg[0])
-        elif str(f) == 'exp':
+        elif str(f)[10:13] == 'exp':
             integ += Ai[i] * f(arg[0], bxi[i])
         else:
             integ += Ai[i] * f(bxi[i])
@@ -113,34 +113,41 @@ def method_Monte_Karlo(f, a, b, *arg):
     n2 = 0
     m2 = 0
     for i in range(math.floor(a), math.ceil(b)):
-        s += [f(i)]
-    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s))) ** 3):
+        if str(f)[10:14] == 'step':
+            s += [f(i, arg[0])]
+        elif str(f)[10:14] == 'loga':
+            s += [f(i, arg[0])]
+        elif str(f)[10:13] == 'exp':
+            s += [f(arg[0], i)]
+        else:
+            s += [f(i)]
+    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s)))):
         x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(0, math.ceil(max(s)))
         m1 += 1
-        if str(f) == 'step':
+        if str(f)[10:14] == 'step':
             if f(x, arg[0]) >= y:
                 n1 += 1
-        elif str(f) == 'loga':
+        elif str(f)[10:14] == 'loga':
             if f(x, arg[0]) >= y:
                 n1 += 1
-        elif str(f) == 'exp':
+        elif str(f)[10:13] == 'exp':
             if f(arg[0], x) >= y:
                 n1 += 1
         else:
             if f(x) >= y:
                 n1 += 1
-    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s)))) ** 3):
+    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s))))):
         x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(math.floor(min(s)), 0)
         m2 += 1
-        if str(f) == 'step':
+        if str(f)[10:14] == 'step':
             if f(x, arg[0]) <= y:
                 n2 += 1
-        elif str(f) == 'loga':
+        elif str(f)[10:14] == 'loga':
             if f(x, arg[0]) <= y:
                 n2 += 1
-        elif str(f) == 'exp':
+        elif str(f)[10:14] == 'exp':
             if f(arg[0], x) <= y:
                 n2 += 1
         else:
@@ -157,7 +164,6 @@ def method_Monte_Karlo(f, a, b, *arg):
             else:
                 itog = 0
     return itog
-
 def clever_grafik(f,method):
     t = []
     y1 = []
