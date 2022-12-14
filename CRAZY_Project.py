@@ -87,7 +87,7 @@ def method_Simson(f, a, b,*arg):
             else:
                 ans2+=2*f(a+(b-a)*i/10000)
     return ans2*(b-a)/3/10000
-def method_Ghaus(f, a, b):
+def method_Ghaus(f, a, b, *arg):
     Ai = [0.11846344, 0.23931433, 0.28444444, 0.23931433, 0.11846344]
     mxi = [0.04691008, 0.23076534, 0.5, 0.76923466, 0.95308992]
     bxi = []
@@ -95,9 +95,16 @@ def method_Ghaus(f, a, b):
     for i in range(len(mxi)):
         bxi.append(a + (b - a) * mxi[i])
     for i in range(len(mxi)):
-        integ += Ai[i] * f(bxi[i])
+        if str(f) == 'step':
+            integ += Ai[i] * f(bxi[i], arg[0])
+        elif str(f) == 'loga':
+            integ += Ai[i] * f(bxi[i], arg[0])
+        elif str(f) == 'exp':
+            integ += Ai[i] * f(arg[0], bxi[i])
+        else:
+            integ += Ai[i] * f(bxi[i])
     return (b - a) * integ
-def method_Monte_Karlo(f, a, b):
+def method_Monte_Karlo(f, a, b, *arg):
     s = []
     x = 0
     y = 0
@@ -107,18 +114,38 @@ def method_Monte_Karlo(f, a, b):
     m2 = 0
     for i in range(math.floor(a), math.ceil(b)):
         s += [f(i)]
-    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s)))**3):
+    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s))) ** 3):
         x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(0, math.ceil(max(s)))
         m1 += 1
-        if f(x) >= y:
-            n1 += 1
-    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s))))**3):
+        if str(f) == 'step':
+            if f(x, arg[0]) >= y:
+                n1 += 1
+        elif str(f) == 'loga':
+            if f(x, arg[0]) >= y:
+                n1 += 1
+        elif str(f) == 'exp':
+            if f(arg[0], x) >= y:
+                n1 += 1
+        else:
+            if f(x) >= y:
+                n1 += 1
+    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s)))) ** 3):
         x = random.uniform(math.floor(a), math.ceil(b))
         y = random.uniform(math.floor(min(s)), 0)
         m2 += 1
-        if f(x) <= y:
-            n2 += 1
+        if str(f) == 'step':
+            if f(x, arg[0]) <= y:
+                n2 += 1
+        elif str(f) == 'loga':
+            if f(x, arg[0]) <= y:
+                n2 += 1
+        elif str(f) == 'exp':
+            if f(arg[0], x) <= y:
+                n2 += 1
+        else:
+            if f(x) <= y:
+                n2 += 1
     if (m1 != 0) and (m2 != 0):
         itog = ((n1 / m1) * (b - a) * math.ceil(max(s))) + ((n2 / m2) * (b - a) * math.floor(min(s)))
     else:
