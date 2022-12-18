@@ -1,7 +1,5 @@
-from math import sin,cos,tan,log
+from math import *
 import random
-import re
-import math
 from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
@@ -112,7 +110,7 @@ def method_Monte_Karlo(f, a, b, *arg):
     m1 = 0
     n2 = 0
     m2 = 0
-    for i in range(math.floor(a), math.ceil(b)):
+    for i in range(floor(a), ceil(b)):
         if str(f)[10:14] == 'step':
             s += [f(i, arg[0])]
         elif str(f)[10:14] == 'loga':
@@ -121,9 +119,9 @@ def method_Monte_Karlo(f, a, b, *arg):
             s += [f(arg[0], i)]
         else:
             s += [f(i)]
-    for i in range(((math.ceil(b) - math.floor(a)) * math.ceil(max(s)))):
-        x = random.uniform(math.floor(a), math.ceil(b))
-        y = random.uniform(0, math.ceil(max(s)))
+    for i in range(((ceil(b) - floor(a)) * ceil(max(s)))):
+        x = random.uniform(floor(a), ceil(b))
+        y = random.uniform(0, ceil(max(s)))
         m1 += 1
         if str(f)[10:14] == 'step':
             if f(x, arg[0]) >= y:
@@ -137,9 +135,9 @@ def method_Monte_Karlo(f, a, b, *arg):
         else:
             if f(x) >= y:
                 n1 += 1
-    for i in range(((math.ceil(b) - math.floor(a)) * abs(math.floor(min(s))))):
-        x = random.uniform(math.floor(a), math.ceil(b))
-        y = random.uniform(math.floor(min(s)), 0)
+    for i in range(((ceil(b) - floor(a)) * abs(floor(min(s))))):
+        x = random.uniform(floor(a), ceil(b))
+        y = random.uniform(floor(min(s)), 0)
         m2 += 1
         if str(f)[10:14] == 'step':
             if f(x, arg[0]) <= y:
@@ -154,13 +152,13 @@ def method_Monte_Karlo(f, a, b, *arg):
             if f(x) <= y:
                 n2 += 1
     if (m1 != 0) and (m2 != 0):
-        itog = ((n1 / m1) * (b - a) * math.ceil(max(s))) + ((n2 / m2) * (b - a) * math.floor(min(s)))
+        itog = ((n1 / m1) * (b - a) * ceil(max(s))) + ((n2 / m2) * (b - a) * floor(min(s)))
     else:
         if m1 != 0:
-            itog = ((n1 / m1) * (b - a) * math.ceil(max(s)))
+            itog = ((n1 / m1) * (b - a) * ceil(max(s)))
         else:
             if m2 != 0:
-                itog = ((n2 / m2) * (b - a) * math.floor(min(s)))
+                itog = ((n2 / m2) * (b - a) * floor(min(s)))
             else:
                 itog = 0
     return itog
