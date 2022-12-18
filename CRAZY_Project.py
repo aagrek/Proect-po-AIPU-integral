@@ -33,48 +33,48 @@ def method_rectangles(f, a, b,*arg):
     return ans * shag
 def method_trapecia(f, a, b,*arg):
     result=0
-    if str(f)=='step':
+    if str(f)[10:14]=='step':
         result+= (f(a,arg[0])+f(b,arg[0]))/2
-    if str(f)=='loga':
+    if str(f)[10:14]=='loga':
         result+= (f(a,arg[0])+f(b,arg[0]))/2
-    elif str(f)=='exp':
+    elif str(f)[10:13]=='exp':
         result+=(f(arg[0],a)+f(arg[0],b))/2
     else:
         result=(f(a)+f(b))/2
     n=10000
     shag=(b-a)/n
     for i in range(1,n):
-        if str(f)=='step':
+        if str(f)[10:14]=='step':
             result=result + f(a+shag*i,arg[0])
-        elif str(f)=='loga':
+        elif str(f)[10:14]=='loga':
             result=result + f(a+shag*i,arg[0])
-        elif str(f)=='exp':
+        elif str(f)[10:13]=='exp':
             result=result + f(arg[0],a+shag*i)
         result+=f(a+shag*i)
     return result * shag
 def method_Simson(f, a, b,*arg):
-    if arg=='step':
+    if str(f)[10:14]=='step':
         ans2=f(a,arg[0])+f(b,arg[0])
-    elif arg=='loga':
+    elif str(f)[10:14]=='loga':
         ans2=f(a,arg[0])+f(b,arg[0])
-    elif str(f)=='exp':
+    elif str(f)[10:13]=='exp':
         ans2=f(arg[0],a)+f(arg[0],b)
     else:
         ans2=f(a)+f(b)
     
-    if str(f)=='step':
+    if str(f)[10:14]=='step':
         for i in range(1,10000):
             if i%2==1:
                 ans2+=4*f(a+(b-a)*i/10000,arg[0])
             else:
                 ans2+=2*f(a+(b-a)*i/10000,arg[0])
-    elif str(f)=='loga':
+    elif str(f)[10:14]=='loga':
         for i in range(1,10000):
             if i%2==1:
                 ans2+=4*f(a+(b-a)*i/10000,arg[0])
             else:
                 ans2+=2*f(a+(b-a)*i/10000,arg[0])
-    elif str(f)=='exp':
+    elif str(f)[10:13]=='exp':
         for i in range(1,10000):
             if i%2==1:
                 ans2+=4*f(arg[0],a+(b-a)*i/10000)
@@ -147,7 +147,7 @@ def method_Monte_Karlo(f, a, b, *arg):
         elif str(f)[10:14] == 'loga':
             if f(x, arg[0]) <= y:
                 n2 += 1
-        elif str(f)[10:14] == 'exp':
+        elif str(f)[10:13] == 'exp':
             if f(arg[0], x) <= y:
                 n2 += 1
         else:
