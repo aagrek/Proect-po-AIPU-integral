@@ -11,7 +11,8 @@ def exp(a,x):
     return a**x
 def loga(x,a):
     return log(x,a)
-
+def x(x):
+    return x
 def integ(f, a, b):
     v, err = integrate.quad(f, a, b)
     return v
@@ -168,15 +169,14 @@ def clever_grafik(f,method):
     t = np.arange(1, 101, 0.1)
 
     for i in range(0, 1000):
-        y1.append(method(f, 0, t[i]) - integ(f, 0, t[i]))
-    plt.title('График погрешностей' )
+        y1.append(abs(podshet(f, 0,t[i], method) - podshet(f,0 ,t[i], integ)))
+    plt.title('График погрешностей ' +str(f))
     plt.plot(t, y1, 'r')
     plt.show()
-    
-stroka='sin-step5+exp0.5+loga5'
+stroka='sin-cos'
 fun=method_rectangles
-a=10
-b=20
+a=2
+b=9
 def podshet(st,a,b,f):
     st=st.split('+')
     ans=0   
@@ -212,3 +212,4 @@ def podshet(st,a,b,f):
                         ans-= f(eval(k[j]),a,b)
     return ans
 print(podshet(stroka,a,b,fun))
+print(clever_grafik(stroka,fun))
