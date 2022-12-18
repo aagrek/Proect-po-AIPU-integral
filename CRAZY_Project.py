@@ -1,4 +1,4 @@
-from math import *
+rom math import *
 import random
 from scipy import integrate
 import matplotlib.pyplot as plt
@@ -34,7 +34,7 @@ def method_trapecia(f, a, b,*arg):
     result=0
     if str(f)[10:14]=='step':
         result+= (f(a,arg[0])+f(b,arg[0]))/2
-    if str(f)[10:14]=='loga':
+    elif str(f)[10:14]=='loga':
         result+= (f(a,arg[0])+f(b,arg[0]))/2
     elif str(f)[10:13]=='exp':
         result+=(f(arg[0],a)+f(arg[0],b))/2
@@ -49,7 +49,8 @@ def method_trapecia(f, a, b,*arg):
             result=result + f(a+shag*i,arg[0])
         elif str(f)[10:13]=='exp':
             result=result + f(arg[0],a+shag*i)
-        result+=f(a+shag*i)
+        else:
+            result+=f(a+shag*i)
     return result * shag
 def method_Simson(f, a, b,*arg):
     if str(f)[10:14]=='step':
@@ -169,14 +170,10 @@ def clever_grafik(f,method):
     t = np.arange(1, 101, 0.1)
 
     for i in range(0, 1000):
-        y1.append(abs(podshet(f, 0,t[i], method) - podshet(f,0 ,t[i], integ)))
-    plt.title('График погрешностей ' +str(f))
+        y1.append(abs(podshet(f, 1,t[i], method) - podshet(f,1 ,t[i], integ)))
+    plt.title('График погрешностей ' +str(f)+' ' + str(method)[10:str(method).find('at')])
     plt.plot(t, y1, 'r')
     plt.show()
-stroka='sin-cos'
-fun=method_rectangles
-a=2
-b=9
 def podshet(st,a,b,f):
     st=st.split('+')
     ans=0   
@@ -211,5 +208,3 @@ def podshet(st,a,b,f):
                     else:
                         ans-= f(eval(k[j]),a,b)
     return ans
-print(podshet(stroka,a,b,fun))
-print(clever_grafik(stroka,fun))
